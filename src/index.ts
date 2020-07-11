@@ -1,5 +1,12 @@
 import './index.scss';
 import { delay } from './mixin';
+import {
+  quadraticFuncCoordY,
+  calcGradient,
+  calcVertexY,
+  calcRandomValueFromRange,
+  calcRandomValueFromValueAndRate,
+} from './calc';
 
 window.onload = async function () {
   createCharSpan();
@@ -8,6 +15,8 @@ window.onload = async function () {
   await delay(1200);
   changeColor();
   frameAnimation();
+  await delay(10);
+  charAnimation(animation);
 };
 
 /*
@@ -97,5 +106,79 @@ function frameAnimation() {
     duration: 200,
     fill: 'forwards',
     easing: 'ease-in',
+  });
+}
+
+/* 1文字に対してアニメーションをさせる */
+function charAnimation(animation: (elem: Element, index: number) => void) {
+  Array.from(
+    document.getElementsByClassName('box__sentences--char')
+  ).forEach((elem, index) => animation(elem, index));
+}
+
+function animation(elem: Element, index: number) {
+  // 画面のサイズ
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
+  // 頂点の座標
+  const vertexX = -windowWidth;
+  const vertexY = 2 * windowHeight;
+
+  // 頂点が(vertexX, vertexY)で、座標(0, 3/2*windowYFromRight)を通る2次関数の傾きを求める
+  const gradient = calcGradient(vertexX, vertexY, 0, 1.5 * windowHeight);
+
+  // アニメーションの終わりの座標
+  const goalX = windowWidth * 2;
+
+  //この文字の, 画面左からの座標取得
+  const coordXFromLeftTopPx = elem.getBoundingClientRect().left;
+  const coordYFromLeftTopPx = elem.getBoundingClientRect().top;
+
+  //この文字の座標を通る2次関数の頂点のY座標
+  const currentVertexY = calcVertexY(
+    coordYFromLeftTopPx,
+    gradient,
+    coordXFromLeftTopPx,
+    vertexX
+  );
+
+  // 文字のアニメーションの始動タイミングをランダムに
+  const delay = Math.floor(Math.random() * 700) + 300 - index * 0.25;
+
+  /* // 文字の場所に応じてスピードを変える
+  const speed =
+    (coordYFromLeftTopPx ** 2 + (windowWidth - coordXFromLeftTopPx) ** 2) *
+    0.0001; */
+
+  // ある文字の移動距離
+  const translateX = goalX - coordXFromLeftTopPx;
+  const translateY =
+    quadraticFuncCoordY(goalX, gradient, vertexX, currentVertexY) -
+    coordYFromLeftTopPx;
+
+  const SPAN_OFFSET = 8;
+  const animateList = [];
+  let degValueOld = 0;
+
+  for (let i = 0; i < SPAN_OFFSET + 1; i++) {
+    const rate = i / SPAN_OFFSET;
+    const degValue = i == 0 ? 0 : calcRandomValueFromRange(45, 180);
+    const transX = calcRandomValueFromValueAndRate(translateX * rate, 0.95);
+    const transY = calcRandomValueFromValueAndRate(translateY * rate, 0.95);
+    animateList.push({
+      offset: rate,
+      transform: `translate(${transX}px, ${transY}px) rotate(-${
+        degValueOld + degValue
+      }deg)`,
+    });
+    degValueOld += degValue;
+  }
+
+  elem.animate(animateList, {
+    delay: delay,
+    duration: 2200,
+    fill: 'forwards',
+    easing: 'ease-in-out',
   });
 }
