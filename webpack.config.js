@@ -1,6 +1,7 @@
-const MODE = "development";
-const enabledSourceMap = MODE === "development";
+const MODE = 'development';
+const enabledSourceMap = MODE === 'development';
 
+// eslint-disable-next-line no-undef
 module.exports = {
   mode: MODE,
   entry: `./src/index.ts`,
@@ -16,36 +17,36 @@ module.exports = {
       {
         test: /\.scss/,
         use: [
-          "style-loader",
+          'style-loader',
           {
-            loader: "css-loader",
-            options: { 
+            loader: 'css-loader',
+            options: {
               url: false,
               sourceMap: enabledSourceMap,
-              importLoaders: 2
-            }
+              importLoaders: 2,
+            },
           },
           {
-            loader: "sass-loader",
-            options: {              
-              sourceMap: enabledSourceMap
-            }
-          }
-        ]
-      }
-    ]
+            loader: 'sass-loader',
+            options: {
+              sourceMap: enabledSourceMap,
+            },
+          },
+        ],
+      },
+    ],
   },
 
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
   },
 
   devServer: {
-    contentBase: "dist",
-    open: true
+    contentBase: 'dist',
+    open: true,
   },
 
   output: {
-    filename: "main.js"
+    filename: 'main.js',
   },
 };
