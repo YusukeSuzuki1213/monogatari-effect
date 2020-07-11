@@ -37,7 +37,7 @@ html, body {
     writing-mode: horizontal-tb;
     font-size: 3rem;
     letter-spacing: 3rem;
-    //visibility: hidden;
+    visibility: hidden;
     font-weight: 600;
 
     /* @include tablet() {
@@ -54,7 +54,7 @@ html, body {
   &__sentences {
     font-size: 1.5rem;
     line-height: 1.7;
-    //visibility: hidden;
+    visibility: hidden;
 
     /* @include sp() {
       font-size: 0.9rem;

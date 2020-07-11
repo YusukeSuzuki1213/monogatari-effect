@@ -1,0 +1,5 @@
+/*
+ * ミリ秒待つ
+ */
+export const delay = (ms: number): Promise<number> =>
+  new Promise((resolve) => setTimeout(resolve, ms));
