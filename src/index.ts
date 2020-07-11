@@ -1,3 +1,5 @@
-import "./index.scss";
+import './index.scss';
 
-console.log("Hello world");
+window.onload = function () {
+  console.log('hello');
+};
