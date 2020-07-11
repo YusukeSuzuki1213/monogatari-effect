@@ -1,3 +1,64 @@
-.title {
-  color: red;
+html, body {
+  height: 100%;
+}
+
+.wrap {  
+  display: flex;  
+  height: 100%;
+  background: #fbf5f8;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  font-family: "Noto Serif JP", serif;
+  position: relative;
+  width: 85%;
+  height: 85%;
+  color: #e89eb8;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+  clip-path: inset(-100vw -100vw -100vw 0);
+
+  /* @include sp() {
+    width: 90%;
+    height: 90%;
+  } */
+
+  &__title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    writing-mode: horizontal-tb;
+    font-size: 3rem;
+    letter-spacing: 3rem;
+    //visibility: hidden;
+    font-weight: 600;
+
+    /* @include tablet() {
+      font-size: 2.2rem;
+      letter-spacing: 2rem;
+    }
+
+    @include sp() {
+      font-size: 1.1rem;
+      letter-spacing: 0.8rem;
+    } */
+  }
+
+  &__sentences {
+    font-size: 1.5rem;
+    line-height: 1.7;
+    //visibility: hidden;
+
+    /* @include sp() {
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    } */    
+  }
 }
