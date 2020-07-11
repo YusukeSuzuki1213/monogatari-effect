@@ -1,4 +1,4 @@
-import './index.scss';
+import './css/index.scss';
 import { delay } from './mixin';
 import {
   quadraticFuncCoordY,

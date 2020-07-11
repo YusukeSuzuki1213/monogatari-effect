@@ -1,0 +1,19 @@
+$pc-content-width: 750px;
+
+@mixin pc() {
+  @media screen and (min-width: $pc-content-width + 1) {
+    @content;
+  }
+}
+
+@mixin tablet() {
+  @media screen and (max-width: 1024px + 1) {
+    @content;
+  }
+}
+
+@mixin sp() {
+  @media screen and (max-width: $pc-content-width) {
+    @content;
+  }
+}
